@@ -32,6 +32,22 @@ void potDOWN(int valor){
   digitalWrite(INC, HIGH);
 }
 
+void potCero(){
+  digitalWrite(CS, HIGH);
+  digitalWrite(INC, HIGH);
+  digitalWrite(UD, LOW);
+  delay(10);
+  digitalWrite(CS,LOW);
+  for(k=0;k<100;k++){
+    digitalWrite(INC, HIGH);
+    delay(tPaso);
+    digitalWrite(INC, LOW);
+    delay(10);
+  }
+  digitalWrite(CS, HIGH);
+  digitalWrite(INC, HIGH);
+}
+
 void potReset(){
 
     digitalWrite(INC, HIGH);

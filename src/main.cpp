@@ -7,14 +7,32 @@
 #define PMT A0
 #define act1 13
 #define enc1 12
+// cambiar las salidas, por el POTdigital.
+#define INC 23
+#define UD 25
+#define CS 27
+// se pueden desconectar estos encoders y el EN y utilizar el pot digital.
 #define act2 11
 #define enc2 10
-
 //definen salidas de motor y tipo de pasao.
 #define EN 9
+
 #define M0 8
 #define M1 7
 #define M2 6
+//tabla de tipo de paso.
+/*
+MODE0 	MODE1 	MODE2 	Microstep Resolution
+0  Low 	Low 	Low 	Full step
+1  High 	Low 	Low 	Half step
+2  Low 	High 	Low 	1/4 step
+3  High 	High 	Low 	1/8 step
+4  Low 	Low 	High 	1/16 step
+5  High 	Low 	High 	1/32 step
+6  Low 	High 	High 	1/32 step
+7  High 	High 	High 	1/32 step
+*/
+
 //*********************** Se modifican mientras no se usen, para probarse con arduino uno
 //se definen las entradas y salidas del motor.
 #define reset 5
@@ -36,7 +54,7 @@ long contarPaso = 0;
 
 #include <Arduino.h>
 #include "stepper.h"
-#include "cadenaSerial.h"
+//#include "cadenaSerial.h"
 #include "variables.h"
 #include "ADCprom.h"
 
@@ -59,6 +77,11 @@ void setup() {
   */
 
   pinMode(PMT, INPUT);
+
+  pinMode(CS, OUTPUT);
+  pinMode(UD, OUTPUT);
+  pinMode(INC, OUTPUT);
+
 
   pinMode(act1, OUTPUT);
   pinMode(enc1, INPUT);
@@ -90,6 +113,9 @@ void setup() {
   digitalWrite(sleep, HIGH);
   digitalWrite(paso, LOW);
   digitalWrite(dire, LOW);
+
+  //potCero();
+
 }
 
 void loop() {
@@ -209,6 +235,10 @@ if(Serial.available() == 9){
 
    digitalWrite(act1, LOW);
    break;
+
+   case 't':
+   tipoPaso();
+   default;
 
    case 'V':
     delay(500);
