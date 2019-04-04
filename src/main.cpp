@@ -55,6 +55,7 @@ long contarPaso = 0;
 #include <Arduino.h>
 #include "stepper.h"
 //#include "cadenaSerial.h"
+#include "microStep.h"
 #include "variables.h"
 #include "ADCprom.h"
 
@@ -235,10 +236,6 @@ if(Serial.available() == 9){
 
    digitalWrite(act1, LOW);
    break;
-
-   case 't':
-   tipoPaso();
-   default;
 
    case 'V':
     delay(500);
