@@ -121,7 +121,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  imprimir();
+  imprimir(velL);
 if(Serial.available() == 9){
 //accion
   A = Serial.read();
@@ -172,7 +172,7 @@ if(Serial.available() == 9){
    for (j = 1; j <= pasosM; j++){
    retorno();
    posicion--;
-   imprimir();
+   imprimir(velL);
    }
 
    borrar();
@@ -212,7 +212,7 @@ if(Serial.available() == 9){
      posicion++;
      S = 's';
      promedio = lecturaADCn(inc_muestras);
-     imprimir();
+     imprimir(promedio);
 
    }
    borrar();
@@ -229,7 +229,7 @@ if(Serial.available() == 9){
    for (j = 1;j <= pasosM; j++){
      pasoMotor();
      posicion++;
-     imprimir();
+     imprimir(velL);
    }
    j = 1;
    borrar();
@@ -237,11 +237,15 @@ if(Serial.available() == 9){
    digitalWrite(act1, LOW);
    break;
 
+   case 't':
+   tipoPaso(inc_muestras);
+   borrar();
+   break;
+
    case 'V':
     delay(500);
     velL = pasosM;
     delay(1000);
-    promedio = velL;
     borrar();
     break;
 //******************************************************************

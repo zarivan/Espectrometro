@@ -9,9 +9,13 @@ MODE0 	MODE1 	MODE2 	Microstep Resolution
 6  Low 	High 	High 	1/32 step
 7  High 	High 	High 	1/32 step
 */
-void tipoPaso(int inc_muestras){
-
-switch(inc_muestras){
+void tipoPaso(int microP){
+microP = microP -1;
+if(microP <= 0)
+{
+  microP = 0;
+}
+switch(microP){
   case 0:
   digitalWrite(M0,LOW);
   digitalWrite(M1,LOW);

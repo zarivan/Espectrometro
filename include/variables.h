@@ -46,6 +46,53 @@ void rellenar(){
   }
 
 }
+void rellenar2(int valorR){
+  if(valorR >= 0){
+    Serial.print('+');
+    if(valorR < 10000)
+    {
+      Serial.print(0);
+
+      if(valorR<1000){
+
+        Serial.print(0);
+
+        if(valorR<100){
+
+        Serial.print(0);
+
+        if(valorR<10 ){
+
+           Serial.print(0);
+          }
+        }
+      }
+    }
+  }else{
+
+    if(valorR > -10000)
+    {
+      Serial.print(0);
+
+      if(valorR > -1000){
+
+        Serial.print(0);
+
+        if(valorR > -100){
+
+        Serial.print(0);
+
+        if(valorR > -10 ){
+
+        Serial.print(0);
+          }
+        }
+      }
+    }
+  }
+
+}
+
 void Srellenar(){
   if(promedio<10000)
   {
@@ -63,14 +110,14 @@ void Srellenar(){
     }
   }
 }
-void imprimir(){
+void imprimir(int valor){
    Serial.print("p");
-   rellenar();
+   rellenar2(posicion);
    Serial.print(posicion);
    Serial.print(",");
    Serial.print(S);
-   Srellenar();
-   Serial.println(promedio);
+   rellenar2(valor);
+   Serial.println(valor);
    S = 'V';
     }
 void borrar(){
