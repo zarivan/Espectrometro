@@ -1,51 +1,3 @@
-void rellenar(){
-  if(posicion >= 0){
-    Serial.print('+');
-    if(posicion < 10000)
-    {
-      Serial.print(0);
-
-      if(posicion<1000){
-
-        Serial.print(0);
-
-        if(posicion<100){
-
-        Serial.print(0);
-
-        if(posicion<10 ){
-
-           Serial.print(0);
-          }
-        }
-      }
-    }
-  }else{
-
-    if(posicion > -10000)
-    {
-      Serial.print(0);
-
-      if(posicion > -1000){
-
-        Serial.print(0);
-
-        if(posicion > -100){
-
-        Serial.print(0);
-
-        if(posicion > -10 ){
-
-           Serial.print(0);
-
-
-        }
-        }
-      }
-    }
-  }
-
-}
 void rellenar2(int valorR){
   if(valorR >= 0){
     Serial.print('+');
@@ -91,24 +43,6 @@ void rellenar2(int valorR){
     }
   }
 
-}
-
-void Srellenar(){
-  if(promedio<10000)
-  {
-    Serial.print(0);
-    if(promedio<1000){
-
-      Serial.print(0);
-      if(promedio<100){
-
-        Serial.print(0);
-        if(promedio<10){
-           Serial.print(0);
-        }
-      }
-    }
-  }
 }
 void imprimir(int valor){
    Serial.print("p");

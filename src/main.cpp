@@ -5,8 +5,8 @@
 // variables de entrada y salida para activar el encoder 1 y 2.
 
 #define PMT A0
-#define act1 13
-#define enc1 12
+#define act1 13 //salidad
+#define enc1 12 //entrada, regreso del encoder.
 // cambiar las salidas, por el POTdigital.
 #define INC 23
 #define UD 25
@@ -41,7 +41,7 @@ MODE0 	MODE1 	MODE2 	Microstep Resolution
 #define dire 2
 
 int velH = 100;
-long velL = 900;
+long velL = 2400;
 long velT = 0;
 char S = 'V';
 char A = 'Z';
@@ -58,6 +58,7 @@ long contarPaso = 0;
 #include "microStep.h"
 #include "variables.h"
 #include "ADCprom.h"
+#include "digPot.h"
 
 void setup() {
   Serial.begin(115200);
@@ -84,8 +85,8 @@ void setup() {
   pinMode(INC, OUTPUT);
 
 
-  pinMode(act1, OUTPUT);
-  pinMode(enc1, INPUT);
+  pinMode(act1, OUTPUT); //pin 13
+  pinMode(enc1, INPUT); //pin12
   pinMode(act2, OUTPUT);
   pinMode(enc2, INPUT);
 
@@ -115,7 +116,8 @@ void setup() {
   digitalWrite(paso, LOW);
   digitalWrite(dire, LOW);
 
-  //potCero();
+  potCero();
+  potInicio(30);
 
 }
 

@@ -47,6 +47,21 @@ void potCero(){
   digitalWrite(CS, HIGH);
   digitalWrite(INC, HIGH);
 }
+void potInicio(int valor){
+  digitalWrite(CS, HIGH);
+  digitalWrite(INC, HIGH);
+  digitalWrite(UD, HIGH);
+  delay(10);
+  digitalWrite(CS,LOW);
+  for(k=0;k<valor;k++){
+    digitalWrite(INC, HIGH);
+    delay(tPaso);
+    digitalWrite(INC, LOW);
+    delay(10);
+  }
+  digitalWrite(CS, HIGH);
+  digitalWrite(INC, HIGH);
+}
 
 void potReset(){
 
