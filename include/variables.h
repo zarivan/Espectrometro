@@ -44,6 +44,10 @@ void rellenar2(int valorR){
   }
 
 }
+
+//imprimir velocidad al inicio del programa y apartir de ahí solo cuando la velocidad sea
+//necesaria enviarse de nuevo.
+//solición temporal.
 void imprimir(int valor){
    Serial.print("p");
    rellenar2(posicion);

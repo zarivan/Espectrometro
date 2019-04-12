@@ -5,6 +5,8 @@
 // variables de entrada y salida para activar el encoder 1 y 2.
 
 #define PMT A0
+#define conPMT A1
+
 #define act1 13 //salidad
 #define enc1 12 //entrada, regreso del encoder.
 // cambiar las salidas, por el POTdigital.
@@ -40,6 +42,7 @@ MODE0 	MODE1 	MODE2 	Microstep Resolution
 #define paso 3
 #define dire 2
 
+int ganPMT = 0;
 int velH = 100;
 long velL = 2400;
 long velT = 0;
@@ -123,7 +126,9 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  ganPMT = analogRead(conPMT);
   imprimir(velL);
+  imprimir(conPMT);
 if(Serial.available() == 9){
 //accion
   A = Serial.read();
@@ -248,6 +253,7 @@ if(Serial.available() == 9){
     delay(500);
     velL = pasosM;
     delay(1000);
+    imprimir(velL);
     borrar();
     break;
 //******************************************************************
