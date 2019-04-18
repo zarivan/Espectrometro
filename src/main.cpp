@@ -14,7 +14,7 @@
 #define act2 11
 #define enc2 10
 
-//definen salidas de motor y tipo de paso.
+//definen salidas de motor y tipo de paso. Cuack
 #define EN 9
 
 #define M0 8
