@@ -67,7 +67,7 @@ void setup() {
         64 	1     1     0 	    0.25             	19.2
       128 	1     1     1 	    0.125 	          9.6
   */
-   
+
   pinMode(PMT, INPUT);
 
   pinMode(CSEL, OUTPUT);
@@ -133,103 +133,103 @@ void loop() {
     muestra1 *= 10;
     int muestra2 = Serial.read()-48;
     inc_muestras = muestra1+muestra2;
+  }
+
+  switch(A){
+    case 'a':
+    for(int v=0; v<2; v++){
+      while(digitalRead(enc1) == true){
+        encender();
+      }
+      delay(1000);
+      velT = velL;
+      if(digitalRead(enc1) == false){
+        borrar();
+        posicion = 0;
+        velL = 1000;
+        digitalWrite(act1, HIGH);
+      }
+      for(int k = 0; k<400; k++){
+        pasoMotor();
+      }
+      velL = velT;
     }
-    
-    switch(A){
-      case 'a':
-      //Serial.println("a");
-      for(int v=0; v<2; v++){
-        while(digitalRead(enc1) == true){
-          encender();
-          }
-          delay(1000);
-          velT = velL;
-          if(digitalRead(enc1) == false){
-            borrar();
-            posicion = 0;
-            velL = 1000;
-            digitalWrite(act1, HIGH);
-            }
-            for(int k = 0; k<400; k++){
-              pasoMotor();
-              }
-        velL = velT;
-        }
-        break;
-        
-        case 'b':
-        for (j = 1; j <= pasosM; j++){
-          retorno();
-          posicion--;
-          imprimir(velL);
-          }
-          borrar();
-          break;
-          
-          //*****************contar ceros*************************************
-          case 'c': // contador de puntos en alto, puede servir para el control.
-          //    contador();
-          while(digitalRead(enc1) == true){
-            contarPaso = 0;
-            //Serial.println("avanzando");
-            encender();
-            }
-            delay(1000);
-            while(digitalRead(enc1) == false){
-              //Serial.print("contando: ");
-              contarPaso = contarPaso+1;
-              retorno();
-              //Serial.println(contarPaso);
-              }
-              delay(1000);
-              if(digitalRead(enc1) == true && contarPaso != 0){
-                apagar();
-                borrar();
-                }
-                break;
-                //********************************************************************
-          case 'm':
-          for (j = 1; j <= pasosM; j++){
-            pasoMotor();
-            //promedio = analogRead(PMT);
-            posicion++;
-            S = 's';
-            promedio = lecturaADCn(inc_muestras);
-            imprimir(promedio);
-            }
-            borrar();
-            break;
-            
-            case 'p':
-            j = 1;
-            digitalWrite(act1, HIGH);
-            for (j = 1;j <= pasosM; j++){
-              pasoMotor();
-              posicion++;
-              imprimir(velL);
-              }
-              j = 1;
-              borrar();
-              digitalWrite(act1, LOW);
-              break;
+    break;
 
-   case 't':
-   tipoPaso(inc_muestras);
-   borrar();
-   break;
+    case 'b':
+    for (j = 1; j <= pasosM; j++){
+      retorno();
+      posicion--;
+      imprimir(velL);
+    }
+    borrar();
+    break;
 
-   case 'V':
+    //*****************contar ceros*************************************
+    case 'c': // contador de puntos en alto, puede servir para el control.
+    //    contador();
+    while(digitalRead(enc1) == true){
+      contarPaso = 0;
+      //Serial.println("avanzando");
+      encender();
+    }
+    delay(1000);
+    while(digitalRead(enc1) == false){
+      //Serial.print("contando: ");
+      contarPaso = contarPaso+1;
+      retorno();
+      //Serial.println(contarPaso);
+    }
+    delay(1000);
+    if(digitalRead(enc1) == true && contarPaso != 0){
+      apagar();
+      borrar();
+    }
+    break;
+
+    //********************************************************************
+    case 'm':
+    for (j = 1; j <= pasosM; j++){
+      pasoMotor();
+      //promedio = analogRead(PMT);
+      posicion++;
+      S = 's';
+      promedio = lecturaADCn(inc_muestras);
+      imprimir(promedio);
+    }
+    borrar();
+    break;
+
+    case 'p':
+    j = 1;
+    digitalWrite(act1, HIGH);
+    for (j = 1;j <= pasosM; j++){
+      pasoMotor();
+      posicion++;
+      imprimir(velL);
+    }
+    j = 1;
+    borrar();
+    digitalWrite(act1, LOW);
+    break;
+
+    case 't':
+    tipoPaso(inc_muestras);
+    borrar();
+    break;
+
+    case 'V':
     delay(500);
     velL = pasosM;
     delay(1000);
     imprimir(velL);
     borrar();
     break;
-//******************************************************************
 
-default:
+    //******************************************************************
+    default:
     apagar();
     borrar();
-break;
- }
+    break;
+  }
 }
