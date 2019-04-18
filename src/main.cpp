@@ -50,13 +50,14 @@ long velL = 2400, pasosM = 0, i = 1, j = 1, posicion = 0, promedio = velL, conta
 //#include "cadenaSerial.h"
 #include "microStep.h"
 #include "variables.h"
-#include "ADCprom.h"
-#include "digPot.h"
 #include "MCP3202.h"
+MCP3202 adc = MCP3202(10);
+#include "digPot.h"
+#include "ADCprom.h"
 
 void setup() {
   Serial.begin(115200);
-
+  adc.begin();
   /*
   Prescale 	ADPS2 ADPS1 ADPS0 	Clock freq (MHz) 	Sampling rate (KHz)
         2 	0     0     1 	    8 	              615
