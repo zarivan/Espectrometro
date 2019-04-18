@@ -1,27 +1,26 @@
-//velocidad del ADC
-#define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
-#define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
-
 // variables de entrada y salida para activar el encoder 1 y 2.
-
 #define PMT A0
 #define conPMT A1
 
 #define act1 13 //salidad
 #define enc1 12 //entrada, regreso del encoder.
+
 // cambiar las salidas, por el POTdigital.
 #define INC 23
 #define UD 25
 #define CS 27
+
 // se pueden desconectar estos encoders y el EN y utilizar el pot digital.
 #define act2 11
 #define enc2 10
-//definen salidas de motor y tipo de pasao.
+
+//definen salidas de motor y tipo de paso.
 #define EN 9
 
 #define M0 8
 #define M1 7
 #define M2 6
+
 //tabla de tipo de paso.
 /*
 MODE0 	MODE1 	MODE2 	Microstep Resolution
@@ -42,34 +41,23 @@ MODE0 	MODE1 	MODE2 	Microstep Resolution
 #define paso 3
 #define dire 2
 
-int ganPMT = 0;
-int velH = 100;
-long velL = 2400;
-long velT = 0;
-char S = 'V';
-char A = 'Z';
-int inc_muestras = 1;
-long pasosM = 0;
-long i = 1; long j = 1;
-long posicion = 0;
-long promedio = velL;
-long contarPaso = 0;
+int ganPMT = 0, velH = 100, inc_muestras = 1;
+char S = 'V', A = 'Z';
+long velL = 2400, pasosM = 0, i = 1, j = 1, posicion = 0, promedio = velL, contarPaso = 0, velT = 0;
 
 #include <Arduino.h>
 #include "stepper.h"
-//#include "cadenaSerial.h"
+#include "cadenaSerial.h"
 #include "microStep.h"
 #include "variables.h"
 #include "ADCprom.h"
 #include "digPot.h"
 
+
 void setup() {
   Serial.begin(115200);
 
-  cbi(ADCSRA, ADPS2); // 1 0 0
-  sbi(ADCSRA, ADPS1);
-  sbi(ADCSRA, ADPS0);
-
+ 
   /*
   Prescale 	ADPS2 ADPS1 ADPS0 	Clock freq (MHz) 	Sampling rate (KHz)
         2 	0     0     1 	    8 	              615
