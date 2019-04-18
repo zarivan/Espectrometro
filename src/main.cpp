@@ -8,7 +8,7 @@
 // cambiar las salidas, por el POTdigital.
 #define INC 23
 #define UD 25
-#define CS 27
+#define CSEL 27
 
 // se pueden desconectar estos encoders y el EN y utilizar el pot digital.
 #define act2 11
@@ -52,7 +52,7 @@ long velL = 2400, pasosM = 0, i = 1, j = 1, posicion = 0, promedio = velL, conta
 #include "variables.h"
 #include "ADCprom.h"
 #include "digPot.h"
-
+#include "MCP3202.h"
 
 void setup() {
   Serial.begin(115200);
@@ -71,7 +71,7 @@ void setup() {
 
   pinMode(PMT, INPUT);
 
-  pinMode(CS, OUTPUT);
+  pinMode(CSEL, OUTPUT);
   pinMode(UD, OUTPUT);
   pinMode(INC, OUTPUT);
 
