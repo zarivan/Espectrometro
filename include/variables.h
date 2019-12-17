@@ -49,7 +49,7 @@ void rellenar2(int valorR){
 //necesaria enviarse de nuevo.
 //solición temporal.
 void imprimir(int valor){
-   Serial.print("p");
+   Serial.print(P);
    rellenar2(posicion);
    Serial.print(posicion);
    Serial.print(",");
@@ -57,9 +57,12 @@ void imprimir(int valor){
    rellenar2(valor);
    Serial.println(valor);
    S = 'G';
+   P = 'p';
     }
 void borrar(){
     A = 'Z';
     S = 'G';
     pasosM = 0;
+    P = 'p';
+
 }

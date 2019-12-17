@@ -41,9 +41,9 @@ MODE0 	MODE1 	MODE2 	Microstep Resolution
 #define paso 3
 #define dire 2
 
-int ganPMT = 0, velH = 100, inc_muestras = 1;
-char S = 'V', A = 'Z';
-long velL = 9900, pasosM = 0, i = 1, j = 1, posicion = 0, promedio = velL, contarPaso = 0, velT = 0;
+int ganPMT = 0, velH = 100, inc_muestras = 1, potDig = 30, PMT_contador = 0, promPMT = 0, Stop = 1, promGan = 0, pGan = 10;
+char S = 'V', A = 'Z', P = 'p';
+long velL = 29900, pasosM = 15099, i = 1, j = 1, posicion = 0, promedio = velL, contarPaso = 0, velT = 0, sumaGan = 0;
 
 #include <Arduino.h>
 #include "stepper.h"
@@ -101,19 +101,34 @@ void setup() {
   digitalWrite(reset, LOW);
   digitalWrite(sleep, HIGH);
   digitalWrite(paso, LOW);
-  digitalWrite(dire, LOW);
+  digitalWrite(dire, HIGH);
 
   potCero();
-  potInicio(30);
+  potInicio(potDig);
+  //potInicio(45);
   S = 'v';
   imprimir(velL);
-  delay(1000);
-
+  //delay(100);
+  S = 'D';
+  imprimir(potDig);
+  //delay(2000);
 }
 
 void loop() {
-  ganPMT = adc.readChannel(1);
-  imprimir(ganPMT);
+  // ganPMT = adc.readChannel(1);
+      pGan=100;
+      sumaGan=0;
+      for(i=1; i<=pGan;i++){
+      sumaGan=sumaGan+adc.readChannel(1);
+      delayMicroseconds(10);
+      }
+      promGan = sumaGan/pGan;
+    //  imprimir(ganPMT);
+      imprimir(promGan);
+  //}
+
+
+
   if(Serial.available() == 9){
     //accion
     A = Serial.read();
@@ -137,21 +152,35 @@ void loop() {
     inc_muestras = muestra1+muestra2;
   }
 
+
   switch(A){
     case 'a':
+      S = 's';
+      promedio = 0;
+      imprimir(promedio);
+    
     for(int v=0; v<2; v++){
       while(digitalRead(enc1) == true){
+        posicion = 18000;
+        imprimir(0);
         encender();
-      }
+
+        posicion = 0;
+        imprimir(0);
+
+
+        }
+
       delay(1000);
       velT = velL;
       if(digitalRead(enc1) == false){
         borrar();
         posicion = 0;
-        velL = 1000;
+        velL = 4000;
         digitalWrite(act1, HIGH);
       }
-      for(int k = 0; k<400; k++){
+
+      for(int k = 0; k<308; k++){
         pasoMotor();
       }
       velL = velT;
@@ -190,6 +219,20 @@ void loop() {
     break;
 
     //********************************************************************
+
+    case 'd':
+    potDOWN(pasosM);
+    S='D';
+    imprimir(potDig);
+    delay(500);
+    borrar();
+    break;
+
+    case 'e':
+    borrar();
+    posicion=0;
+    break;
+
     case 'm':
     for (j = 1; j <= pasosM; j++){
       pasoMotor();
@@ -214,9 +257,55 @@ void loop() {
     borrar();
     digitalWrite(act1, LOW);
     break;
+    
+    case 's':
+    potCero();
+    potDig = 0;
+    sumaGan = 0;
+    promGan = 0;
+    pGan=10;
+
+    for(int c=1;c<=100;c++)
+    {  
+      sumaGan = 0;
+      for(i=1; i<=pGan;i++){
+        sumaGan=sumaGan+adc.readChannel(1);
+        delayMicroseconds(10);
+      }
+      promGan = sumaGan/pGan;
+
+      
+      S = 'f';
+      P = 'd';
+      posicion=potDig;
+      imprimir(promGan);
+      delay(20);
+      potUP(1);
+
+    }
+    potCero();
+    delay(50);
+    borrar();
+    posicion = 0;
+    potDig =25;
+    potInicio(potDig);
+    S='D';
+    imprimir(potDig);
+    
+    
+    
+    break;
 
     case 't':
     tipoPaso(inc_muestras);
+    borrar();
+    break;
+
+    case 'u':
+    potUP(pasosM);
+    S='D';
+    imprimir(potDig);
+    delay(500);
     borrar();
     break;
 
