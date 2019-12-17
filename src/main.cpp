@@ -5,21 +5,21 @@
 #define act1 13 //salidad
 #define enc1 12 //entrada, regreso del encoder.
 
-// cambiar las salidas, por el POTdigital.
-#define INC 23
-#define UD 25
-#define CSEL 27
-
 // se pueden desconectar estos encoders y el EN y utilizar el pot digital.
 #define act2 11
 #define enc2 10
 
-//definen salidas de motor y tipo de paso. Cuack
-#define EN 9
 
-#define M0 8
-#define M1 7
-#define M2 6
+#define UD 7
+#define INC 6
+#define CSEL 5
+
+//definen salidas de motor y tipo de paso. Cuack
+
+#define EN 9
+#define M0 22
+#define M1 24
+#define M2 26
 
 //tabla de tipo de paso.
 /*
@@ -36,29 +36,28 @@ MODE0 	MODE1 	MODE2 	Microstep Resolution
 
 //*********************** Se modifican mientras no se usen, para probarse con arduino uno
 //se definen las entradas y salidas del motor.
-#define reset 5
+#define reset 28
 #define sleep 4
 #define paso 3
 #define dire 2
 
 int ganPMT = 0, velH = 100, inc_muestras = 1;
 char S = 'V', A = 'Z';
-long velL = 2400, pasosM = 0, i = 1, j = 1, posicion = 0, promedio = velL, contarPaso = 0, velT = 0;
+long velL = 9900, pasosM = 0, i = 1, j = 1, posicion = 0, promedio = velL, contarPaso = 0, velT = 0;
 
 #include <Arduino.h>
 #include "stepper.h"
-//#include "cadenaSerial.h"
 #include "microStep.h"
 #include "variables.h"
 #include "MCP3202.h"
-MCP3202 adc = MCP3202(10);
+MCP3202 adc = MCP3202(53);
 #include "digPot.h"
 #include "ADCprom.h"
 
 void setup() {
   Serial.begin(115200);
   adc.begin();
-  /*
+  /* al utilizar un ADC-Externo esto ya no es necesario.
   Prescale 	ADPS2 ADPS1 ADPS0 	Clock freq (MHz) 	Sampling rate (KHz)
         2 	0     0     1 	    8 	              615
         4 	0     1     0 	    4 	              307
@@ -106,13 +105,15 @@ void setup() {
 
   potCero();
   potInicio(30);
+  S = 'v';
+  imprimir(velL);
+  delay(1000);
+
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  ganPMT = analogRead(conPMT);
-  imprimir(velL);
-  imprimir(conPMT);
+  ganPMT = adc.readChannel(1);
+  imprimir(ganPMT);
   if(Serial.available() == 9){
     //accion
     A = Serial.read();
@@ -161,7 +162,7 @@ void loop() {
     for (j = 1; j <= pasosM; j++){
       retorno();
       posicion--;
-      imprimir(velL);
+      imprimir(ganPMT);
     }
     borrar();
     break;
@@ -207,7 +208,7 @@ void loop() {
     for (j = 1;j <= pasosM; j++){
       pasoMotor();
       posicion++;
-      imprimir(velL);
+      imprimir(ganPMT);
     }
     j = 1;
     borrar();
@@ -219,11 +220,12 @@ void loop() {
     borrar();
     break;
 
-    case 'V':
+    case 'v':
     delay(500);
     velL = pasosM;
-    delay(1000);
+    S = 'v';
     imprimir(velL);
+    delay(1000);
     borrar();
     break;
 

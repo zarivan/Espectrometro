@@ -56,10 +56,10 @@ void imprimir(int valor){
    Serial.print(S);
    rellenar2(valor);
    Serial.println(valor);
-   S = 'V';
+   S = 'G';
     }
 void borrar(){
     A = 'Z';
-    S = 'V';
+    S = 'G';
     pasosM = 0;
 }
