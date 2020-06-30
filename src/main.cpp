@@ -1,3 +1,4 @@
+//Esta línea solo se agrego para ver si funciona el git-merge
 // variables de entrada y salida para activar el encoder 1 y 2.
 #define PMT A0
 #define conPMT A1
