@@ -1,19 +1,19 @@
-void rellenar(){
-  if(posicion >= 0){
+void rellenar2(int valorR){
+  if(valorR >= 0){
     Serial.print('+');
-    if(posicion < 10000)
+    if(valorR < 10000)
     {
       Serial.print(0);
 
-      if(posicion<1000){
+      if(valorR<1000){
 
         Serial.print(0);
 
-        if(posicion<100){
+        if(valorR<100){
 
         Serial.print(0);
 
-        if(posicion<10 ){
+        if(valorR<10 ){
 
            Serial.print(0);
           }
@@ -22,59 +22,47 @@ void rellenar(){
     }
   }else{
 
-    if(posicion > -10000)
+    if(valorR > -10000)
     {
       Serial.print(0);
 
-      if(posicion > -1000){
+      if(valorR > -1000){
 
         Serial.print(0);
 
-        if(posicion > -100){
+        if(valorR > -100){
 
         Serial.print(0);
 
-        if(posicion > -10 ){
+        if(valorR > -10 ){
 
-           Serial.print(0);
-
-
-        }
+        Serial.print(0);
+          }
         }
       }
     }
   }
 
 }
-void Srellenar(){
-  if(promedio<10000)
-  {
-    Serial.print(0);
-    if(promedio<1000){
 
-      Serial.print(0);
-      if(promedio<100){
-
-        Serial.print(0);
-        if(promedio<10){
-           Serial.print(0);
-        }
-      }
-    }
-  }
-}
-void imprimir(){
-   Serial.print("p");
-   rellenar();
+//imprimir velocidad al inicio del programa y apartir de ahí solo cuando la velocidad sea
+//necesaria enviarse de nuevo.
+//solición temporal.
+void imprimir(int valor){
+   Serial.print(P);
+   rellenar2(posicion);
    Serial.print(posicion);
    Serial.print(",");
    Serial.print(S);
-   Srellenar();
-   Serial.println(promedio);
-   S = 'V';
+   rellenar2(valor);
+   Serial.println(valor);
+   S = 'G';
+   P = 'p';
     }
 void borrar(){
     A = 'Z';
-    S = 'V';
+    S = 'G';
     pasosM = 0;
+    P = 'p';
+
 }

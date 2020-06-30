@@ -21,7 +21,6 @@ long int cadenaS(){
     muestra1 *= 10;
     int muestra2 = Serial.read()-48;
     inc_muestras = muestra1+muestra2;
-    return inc_muestras;
   }
-
+  return inc_muestras;
 }
